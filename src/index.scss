@@ -6,14 +6,43 @@ body {
   color: white;
 }
 
+.square-container{
+  margin-left: -1px;
+  margin-top: -1px;
+  $bord: 2px dashed;
+  border: $bord rgb(34, 34, 34);
+  width: calc(15px + 3rem);
+  height: calc(15px + 3rem);
+  cursor: pointer;
+}
 .square {
-  border: 1px solid #999;
-  font-size: 3rem;
+  //border: 1px dashed rgb(190, 82, 82);
+  font-size: 0px;
+  transition: all 0.5s cubic-bezier(1, 0.32, 0, 1.38);
   font-weight: bold;
   text-align: center; 
-  padding: 10px;
-  min-width: calc(15px + 3rem);
-  min-height: calc(15px + 3rem);
+  width: calc(15px + 3rem);
+  height: calc(15px + 3rem);
+  max-width: calc(15px + 3rem);
+  max-height: calc(15px + 3rem);
+  position: relative;
+  top: 1.5rem;
+  height: 0;
+}
+.expand{
+  font-size: 3rem;
+  top: 0;
+  height: initial;
+}
+
+.x{
+  color: blue;
+  text-shadow: 0px 0px 15px blue;
+}
+
+.o{
+  color: red;
+  text-shadow: 0px 0px 15px red;
 }
 
 .square:focus {
@@ -44,8 +73,8 @@ button{
   font-size: 2rem;
   color: white;
   font-size: 2em;
-  background: black;
-  text-shadow: 0px 0px 10px #ffc700;
+  background: #180303;;
+  text-shadow: 0px 0px 10px red;
   cursor: pointer;
   border: 2px solid #40e0d06e;
   margin: 5px;
@@ -53,8 +82,8 @@ button{
 }
 
 button:hover{    
-  text-shadow: 0px 0px 10px #ff0909;
-  background: #40e0d06e;
+  text-shadow: 0px 0px 10px blue;
+  background: #081e4d46;;
 }
 
 
