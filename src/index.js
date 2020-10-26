@@ -31,7 +31,7 @@ class Board extends React.Component {
     return <Square 
       key={i}
       squareID={this.props.squares[i]}
-      addedClasses={(this.props.squares[i] == null)? "" : this.props.squares[i].toLowerCase()+" expand"}
+      addedClasses={(this.props.squares[i] === null)? "" : this.props.squares[i].toLowerCase()+" expand"}
       onClick={()=>this.props.onClick(i)}/>;
   }
 
@@ -47,7 +47,7 @@ class Board extends React.Component {
 
   render() {
     let boardRows = [];
-    const squaresLimit = (this.props.gameType == "tic-tac-toe")? 3:10;
+    const squaresLimit = (this.props.gameType === "tic-tac-toe")? 3:10;
     for(let i = 0; i < squaresLimit; i++){
       let squares = [];
       for(let j = 0; j < squaresLimit; j++){
@@ -83,10 +83,10 @@ class GameScreen extends React.Component {
     const step = this.state.step;
     const history = this.state.stepHistory.slice(0, this.state.step + 1);
     const curr = this.state.stepHistory[step].slice();
-    if(curr[i] != null)
+    if(curr[i] !== null)
       return;
     curr[i] = this.state.currPlayer;
-    let nextPlayer = (this.state.currPlayer == "X")? "O" : "X";
+    let nextPlayer = (this.state.currPlayer === "X")? "O" : "X";
     const end = this.setWinner(curr);
     if(end)
       nextPlayer = this.state.currPlayer;
@@ -118,15 +118,16 @@ class GameScreen extends React.Component {
       if(sq0 !== "" && sq0 === sq1 && sq0 === sq2 && sq1 === sq2){
         return sq0;
       }
+      return null;
     })
-    if(winner != undefined){
+    if(winner !== undefined){
       this.setState({winner: winner});
     }
     return winner;
   }
   render() {
     const c = this.state.currPlayer;
-    const status = (this.state.winner == null)? 'Current player: ' + c : "Won player: " + c;
+    const status = (this.state.winner === null)? 'Current player: ' + c : "Won player: " + c;
 
     const step = this.state.step;
     const current = this.state.stepHistory[step];
@@ -158,20 +159,20 @@ class MainMenuScreen extends React.Component{
   }
   render(){
     let screen = "";
-    if(this.state.gameType == "tic-tac-toe"){
+    if(this.state.gameType === "tic-tac-toe"){
       
       screen =  (<div className="flex-column content-container">
                   <button onClick={(gType, mType)=>this.props.onClick("tic-tac-toe", "hotseat")}>hot seat</button>
                   <button onClick={(gType, mType)=>this.props.onClick("tic-tac-toe", "internet")}>Internet</button>
                   <button onClick={() => this.handleClick("")}>Zpět</button>
                 </div>)
-    }else if(this.state.gameType == "5-in-a-row"){
+    }else if(this.state.gameType === "5-in-a-row"){
       screen =  (<div className="flex-column content-container">
                   <button onClick={(gType, mType)=>this.props.onClick("5-in-a-row", "hotseat")}>hot seat</button>
                   <button onClick={(gType, mType)=>this.props.onClick("5-in-a-row", "internet")}>Internet</button>
                   <button onClick={() => this.handleClick("")}>Zpět</button>
                 </div>)
-    }else if(this.state.gameType == "settings"){
+    }else if(this.state.gameType === "settings"){
       screen =  (<div className="flex-column content-container">
                   <button onClick={() => this.handleClick("")}>Uložit</button>
                 </div>)
@@ -212,10 +213,23 @@ class StateManager extends React.Component{
       multiplayerType: mType,
       currentState: "game"
     });
+    // Add a new document in collection "cities"
+    console.log(firebase);
+    /*db.collection("cities").doc("LA").set({
+      name: "Los Angeles",
+      state: "CA",
+      country: "USA"
+    })
+    .then(function() {
+      console.log("Document successfully written!");
+    })
+    .catch(function(error) {
+      console.error("Error writing document: ", error);
+    });*/
   }
   render(){
     
-    let screen = <MainMenuScreen onClick={(gType, mType)=>this.handleClick(gType, mType)}/>;
+    let screen = null;
     switch(this.state.currentState){
       case "menu":
         screen = <MainMenuScreen onClick={(gType, mType)=>this.handleClick(gType, mType)}/>
@@ -225,6 +239,9 @@ class StateManager extends React.Component{
       break;
       case "settings":
         screen = <SettingsScreen/>
+      break;
+      default:
+        screen = <MainMenuScreen onClick={(gType, mType)=>this.handleClick(gType, mType)}/>
       break;
 
     }
