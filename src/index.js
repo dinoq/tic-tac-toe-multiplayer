@@ -214,8 +214,8 @@ class StateManager extends React.Component{
       currentState: "game"
     });
     // Add a new document in collection "cities"
-    console.log(firebase);
-    /*db.collection("cities").doc("LA").set({
+    /*console.log(firebase);
+    db.collection("cities").doc("LA").set({
       name: "Los Angeles",
       state: "CA",
       country: "USA"
