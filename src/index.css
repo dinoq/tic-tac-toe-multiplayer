@@ -103,4 +103,8 @@ button:hover {
   display: -ms-flexbox;
   display: flex;
 }
+
+h1 {
+  text-align: center;
+}
 /*# sourceMappingURL=index.css.map */
